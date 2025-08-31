@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -25,7 +26,18 @@ func main() {
 		err := r.ParseMultipartForm(10 << 20) // 10MB LIMIT PER IMAGE
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			response := map[string]string{"error": "Could not parse multipart form"}
+
+			// Specifieke error messages
+			var errorMessage string
+			if err.Error() == "http: request body too large" {
+				errorMessage = "File too large, maximum 10MB allowed"
+			} else if err.Error() == "request Content-Type isn't multipart/form-data" {
+				errorMessage = "Must send multipart/form-data, not regular JSON"
+			} else {
+				errorMessage = "Invalid form data: " + err.Error()
+			}
+
+			response := map[string]string{"error": errorMessage}
 			json.NewEncoder(w).Encode(response)
 			return
 		}
@@ -33,7 +45,7 @@ func main() {
 		// Haal de afbeelding op uit het formulier
 		description := r.FormValue("description")
 
-		// Voor nu gewoon de beschrijving terug geven
+		// DE RESPONSE DIE WE TERUG GEVEN: Voor nu gewoon de beschrijving terug geven
 		response := map[string]string{
 			"result":      "Pass",
 			"reason":      "Description received: " + description,
