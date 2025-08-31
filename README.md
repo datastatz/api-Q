@@ -3,7 +3,7 @@
 **API-Q — Kwaliteitscontrole API**
 
 API-Q is een service die monteurs ondersteunt bij kwaliteitscontrole van installaties (bijvoorbeeld witgoed).
-Monteurs sturen een foto van hun installatie samen met een korte beschrijving van de criteria.
+Monteurs sturen een foto van hun installatie samen met een korte beschrijving van de criteria naar onze API.
 De API beoordeelt de foto met behulp van AI en geeft een pass/fail resultaat met een korte feedback.
 
 🎯 Doel
