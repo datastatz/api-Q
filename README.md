@@ -13,3 +13,9 @@ Tijdsbesparing: monteurs hoeven niet te wachten op handmatige controle.
 Betrouwbaarheid: consistente beoordeling volgens dezelfde regels.
 
 Schaalbaarheid: makkelijk uit te breiden naar andere installaties (bijv. zonnepanelen of airco’s).
+
+🔀 Flow
+Client → [multipart] → Jouw API → [base64] → OpenAI API
+
+🖼️ IMAGE ONDERSTEUNING
+API ONDERSTEUNT JPEG, PNG EN WEBP
