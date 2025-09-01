@@ -1,0 +1,17 @@
+curl -X POST http://localhost:8080/quality-check \
+  -F "description=Is deze wasmachine in goede staat?" \
+  -F "photo=@cmd/api/test.jpeg"
+
+
+curl -X POST http://localhost:8080/quality-check \
+  -F "description=Is deze wasmachine in goede staat?" \
+  -F "photo=@cmd/api/test2.jpg"
+
+
+curl -X POST http://localhost:8080/quality-check \
+  -F "description=Is deze wasmachine in goede staat?" \
+  -F "photo=@cmd/api/test3.webp"
+
+  curl -X POST http://localhost:8080/quality-check \
+  -F "description=Is de was machine vel oranje?" \
+  -F "photo=@cmd/api/test4.jpg"
