@@ -12,6 +12,36 @@ curl -X POST http://localhost:8080/quality-check \
   -F "description=Is deze wasmachine in goede staat?" \
   -F "photo=@cmd/api/test3.webp"
 
-  curl -X POST http://localhost:8080/quality-check \
-  -F "description=Is de was machine vel oranje?" \
-  -F "photo=@cmd/api/test4.jpg"
+curl -X POST http://localhost:8080/quality-check \
+-F "description=Is de was machine vel oranje?" \
+-F "photo=@cmd/api/test4.jpg"
+
+___________________________________________________________________
+
+
+curl -X POST http://localhost:8080/quality-check \
+  -F "photo1=@cmd/api/test.jpeg" \
+  -F "description1=Is this washing machine in good condition?" \
+  -F "photo2=@cmd/api/test2.jpg" \
+  -F "description2=Is this washing machine in good condition?" \
+  -F "photo3=@cmd/api/test3.jpg" \
+  -F "description3=Is this washing machine in good condition?" \
+  -F "language=FR"
+
+curl -X POST http://localhost:8080/quality-check \
+  -F "photo1=@cmd/api/test.jpeg" \
+  -F "description1=Is this washing machine in good condition?" \
+  -F "photo2=@cmd/api/test2.jpg" \
+  -F "description2=Is this washing machine in good condition?" \
+  -F "photo3=@cmd/api/test3.jpg" \
+  -F "description3=Is this washing machine in good condition?" \
+  -F "language= DZ"
+
+curl -X POST http://localhost:8080/quality-check \
+  -F "photo1=@cmd/api/test.jpeg" \
+  -F "description1=Is this washing machine in good condition?" \
+  -F "photo2=@cmd/api/test2.jpg" \
+  -F "description2=Is this washing machine in good condition?" \
+  -F "photo3=@cmd/api/test3.jpg" \
+  -F "description3=Is this washing machine in good condition?" \
+  -F "language= NL"
