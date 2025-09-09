@@ -11,8 +11,13 @@ import (
 	"os"
 	"strings"
 
+	// Import database package
 	"github.com/joho/godotenv"
 	"github.com/sashabaranov/go-openai"
+
+	// Import database package
+	"apiq/internal/database"
+	"apiq/internal/middleware"
 )
 
 func main() {
@@ -31,6 +36,9 @@ func main() {
 	}
 
 	client := openai.NewClient(apiKey)
+
+	// Initialiseer database connectie
+	database.InitDatabase()
 
 	// Struct definiëren voor response van elke foto, dit helpt georganiseerde data terug te geven
 	type PhotoAnalysis struct {
@@ -93,8 +101,8 @@ func main() {
 		"ZM": "English", "ZW": "English",
 	}
 
-	// Route voor kwaliteitscontrole (alleen post requests)
-	http.HandleFunc("/quality-check", func(w http.ResponseWriter, r *http.Request) {
+	// Route voor kwaliteitscontrole (alleen post requests), CHECKT OOK DE API KEY
+	http.HandleFunc("/quality-check", middleware.APIKeyAuth(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
 		// Controleer of het een POST request is
@@ -106,6 +114,14 @@ func main() {
 			json.NewEncoder(w).Encode(response)
 			return
 		}
+
+		// Log deze request in de database
+		cost := 0.20 // €0.20 per request
+		log := database.RequestLog{
+			APIKey: r.Header.Get("X-API-Key"),
+			Cost:   cost,
+		}
+		database.DB.Create(&log)
 
 		// Parse multi-part form data (max 10MB)
 		err := r.ParseMultipartForm(10 << 20) // 10MB LIMIT VOOR ALLE FOTOS SAMEN
@@ -126,6 +142,11 @@ func main() {
 			json.NewEncoder(w).Encode(response)
 			return
 		}
+
+
+
+
+
 
 		// Haal language parameter op, default is "en"
 		language := r.FormValue("language")

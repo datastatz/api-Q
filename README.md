@@ -64,5 +64,51 @@ request_logs:
 # Data Flow
 
 1. Bedrijf doet request → Go API → Database log → Response
-2. Admin/Company login → Next.js → Go API → JWT token
+2. Bedrijf → Next.js login → Go API check → JWT token → Dashboard
 3. Dashboard data → Next.js → Go API → Database → Response
+
+# Wat wij zien in de dashboard
+
+Bedrijf A: 150 requests deze maand, €75
+Bedrijf B: 89 requests deze maand, €44.50
+Bedrijf C: 203 requests deze maand, €101.50
+TOTAAL: 442 requests, €221
+
+# Wat bedrijf X ziet in haar dashboard
+
+Jouw requests deze maand: 150
+Jouw kosten deze maand: €75
+
+# Request flow
+
+1. Request komt binnen:
+
+POST /quality-check
+Headers: X-API-Key: ak_abc123def456...
+
+2. Middleware controleert:
+Is er een X-API-Key header?
+Bestaat de API key in de database?
+Is de API key actief?
+
+3. Als geldig:
+Request gaat door naar je endpoint
+Je endpoint krijgt de request
+
+4. Als ongeldig:
+Error response wordt teruggestuurd
+Request stopt hier
+
+# Request logic
+
+Elke request wordt gelogd, ook foutieve:
+✅ Geldige request → Foto geanalyseerd → €0.20 in rekening gebracht
+❌ Foutieve request (geen foto, verkeerde format, etc.) → Geen analyse → €0.20 in rekening gebracht
+
+Je rekent voor API gebruik, niet voor succesvolle analyses
+Net zoals andere API providers (OpenAI, AWS, etc.)
+
+**// Admin credentials (in productie: in database of environment)
+const ADMIN_USERNAME = "admin"
+const ADMIN_PASSWORD = "admin123"     // Verander dit!
+const JWT_SECRET = "stellarisdebeste" // Verander dit!**
