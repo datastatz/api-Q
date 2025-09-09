@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+Ik ga een API bouwen voor kwaliteitscontrole voor monteurs. Even voor de beeldvorming, de monteurs maken foto's van wat ze installeren, denk aan witgoed bijvoorbeeld. Ze versturen een foto en een beschrijving van waar de foto aan moet voldoen. Ik krijg de foto binnen met de beschrijving en ik geef pass of fail terug en een beschrijving waarom je die pass of fail krijgt. De foto moet door een ai laag heen die kan beoordereln of de foto voldoet aan de gestelde eisen.
+
+Dus even concreet, de api is gebouwd voor bedrijven die post requests doen naar onze api met een foto en beschrijving en wij bepalen met ai of de installatie goed is of niet en geven feedback.
+
+Ik ben zelf een junior developer en ben vrij nieuwe in programmeren. Ik vind programmeren lastig en heb erg veel begeleiding nodig. Schrijf NOOIT code zonder dat je toestemming van mij krijgt. Probeer eerst mee te denken met mij en geef de voor en nadelen aan van elke beslissing die ik zou maken. Ik dacht eraan om de code te schrijven in golang en een api-inference te gebruiken van een grote api provider zoals grok of openai. 
+
