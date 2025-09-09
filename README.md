@@ -112,3 +112,5 @@ Net zoals andere API providers (OpenAI, AWS, etc.)
 const ADMIN_USERNAME = "admin"
 const ADMIN_PASSWORD = "admin123"     // Verander dit!
 const JWT_SECRET = "stellarisdebeste" // Verander dit!**
+
+# Analytics GO fixen lijkt op bullshit wat er staat
