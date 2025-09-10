@@ -36,7 +36,7 @@ func AdminLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Maak JWT token
+	// Maak JWT token aan (24 uur geldig)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": loginData.Username,
 		"exp":      time.Now().Add(time.Hour * 24).Unix(), // 24 uur geldig

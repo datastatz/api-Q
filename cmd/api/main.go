@@ -17,6 +17,7 @@ import (
 
 	// Import database package
 	"apiq/internal/database"
+	"apiq/internal/handlers"
 	"apiq/internal/middleware"
 )
 
@@ -101,7 +102,14 @@ func main() {
 		"ZM": "English", "ZW": "English",
 	}
 
-	// Route voor kwaliteitscontrole (alleen post requests), CHECKT OOK DE API KEY
+	// ========================================
+	// MAIN API ROUTE - Foto kwaliteitscontrole
+	// ========================================
+
+	// POST /quality-check - Analyseer foto's met AI
+	// Headers: X-API-Key: ak_... (verplicht!)
+	// Body: multipart/form-data met foto1, description1, photo2, description2, etc.
+	// Response: AI analyse resultaten (pass/fail) per foto
 	http.HandleFunc("/quality-check", middleware.APIKeyAuth(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
@@ -115,13 +123,20 @@ func main() {
 			return
 		}
 
-		// Log deze request in de database
-		cost := 0.20 // €0.20 per request
+		// ========================================
+		// REQUEST LOGGING - Voor analytics en facturering
+		// ========================================
+
+		// Log deze request in de database voor:
+		// 1. Analytics (hoeveel requests per bedrijf per maand)
+		// 2. Facturering (kosten per request)
+		// 3. Monitoring (welke bedrijven gebruiken de API)
+		cost := 0.20 // €0.20 per request (ook voor foutieve requests!)
 		log := database.RequestLog{
-			APIKey: r.Header.Get("X-API-Key"),
-			Cost:   cost,
+			APIKey: r.Header.Get("X-API-Key"), // Welk bedrijf heeft de request gedaan
+			Cost:   cost,                      // Kosten van deze request
 		}
-		database.DB.Create(&log)
+		database.DB.Create(&log) // Sla op in database
 
 		// Parse multi-part form data (max 10MB)
 		err := r.ParseMultipartForm(10 << 20) // 10MB LIMIT VOOR ALLE FOTOS SAMEN
@@ -142,11 +157,6 @@ func main() {
 			json.NewEncoder(w).Encode(response)
 			return
 		}
-
-
-
-
-
 
 		// Haal language parameter op, default is "en"
 		language := r.FormValue("language")
@@ -333,9 +343,38 @@ func main() {
 		}
 
 		// Encodeer de response als JSON en stuur terug naar de client
-
 		json.NewEncoder(w).Encode(response)
-	})
+	}))
+
+	// ========================================
+	// ADMIN ROUTES - Voor jouw dashboard
+	// ========================================
+
+	// POST /admin/login - Jij logt in met username/password
+	// Response: JWT token voor authenticatie
+	http.HandleFunc("/admin/login", handlers.AdminLogin)
+
+	// GET /admin/companies - Overzicht van alle bedrijven en hun API keys
+	// Response: Lijst van alle bedrijven met hun gegevens
+	http.HandleFunc("/admin/companies", handlers.GetAllCompanies)
+
+	// POST /admin/create-key - Nieuwe API key aanmaken voor een bedrijf
+	// Body: {"company_name": "Bedrijfsnaam"}
+	// Response: Nieuwe API key en bedrijfsgegevens
+	http.HandleFunc("/admin/create-key", handlers.CreateAPIKey)
+
+	// GET /admin/analytics - Analytics van alle bedrijven (requests per maand)
+	// Response: Overzicht van alle bedrijven met hun gebruik en kosten
+	http.HandleFunc("/admin/analytics", handlers.AdminAnalytics)
+
+	// ========================================
+	// COMPANY ROUTES - Voor klanten dashboard
+	// ========================================
+
+	// GET /company/analytics - Eigen analytics (requests en kosten per maand)
+	// Headers: X-API-Key: ak_...
+	// Response: Eigen gebruik en kosten overzicht
+	http.HandleFunc("/company/analytics", handlers.CompanyAnalytics)
 
 	//Start een HTTP server op poort 8080, nil geef aan dat er nog geen routes zijn gedefinieerd
 	log.Println("Server start op :8080")

@@ -108,9 +108,11 @@ Elke request wordt gelogd, ook foutieve:
 Je rekent voor API gebruik, niet voor succesvolle analyses
 Net zoals andere API providers (OpenAI, AWS, etc.)
 
-**// Admin credentials (in productie: in database of environment)
-const ADMIN_USERNAME = "admin"
-const ADMIN_PASSWORD = "admin123"     // Verander dit!
-const JWT_SECRET = "stellarisdebeste" // Verander dit!**
+**// Admin credentials (in productie: in database of environment)!**
+!**const ADMIN_USERNAME = "admin"!**
+!**const ADMIN_PASSWORD = "admin123"     // Verander dit!!**
+!**const JWT_SECRET = "stellarisdebeste" // Verander dit!**
 
 # Analytics GO fixen lijkt op bullshit wat er staat
+
+**Check of client uitlogd na 24 uur (JWT expired)**
