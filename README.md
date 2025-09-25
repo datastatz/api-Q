@@ -20,7 +20,7 @@ Client → [multipart] → Jouw API → [base64] → OpenAI API
 
 **🖼️ IMAGE ONDERSTEUNING**
 
-API ONDERSTEUNT JPEG, PNG EN (webp nog niet)
+API ONDERSTEUNT JPEG, PNG EN (webp en avif nog niet)
 
 **Gebruik community sdk**
 

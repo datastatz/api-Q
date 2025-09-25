@@ -33,12 +33,9 @@ func main() {
 
 	client := openai.NewClient(apiKey)
 
-	// Struct definiëren voor response van elke foto, dit helpt georganiseerde data terug te geven
-	type PhotoAnalysis struct {
-		Filename    string `json:"filename"`    // Naam van het bestand
-		Description string `json:"description"` // Beschrijving van wat gecontroleerd moet worden
-		Result      string `json:"result"`      // pass/fail/error/unknown
-		Filesize    string `json:"filesize"`    // Grootte van het bestand
+	// Eenvoudige response struct voor alleen result
+	type QualityResponse struct {
+		Result string `json:"result"` // PASS of FAIL
 	}
 
 	// ========================================
@@ -62,80 +59,46 @@ func main() {
 		}
 
 		// Parse multi-part form data (max 10MB)
-		err := r.ParseMultipartForm(10 << 20) // 10MB LIMIT VOOR ALLE FOTOS SAMEN
+		err := r.ParseMultipartForm(10 << 20)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-
-			// Specifieke error messages
-			var errorMessage string
-			if err.Error() == "http: request body too large" {
-				errorMessage = "File too large, maximum 10MB allowed"
-			} else if err.Error() == "request Content-Type isn't multipart/form-data" {
-				errorMessage = "Must send multipart/form-data, not regular JSON"
-			} else {
-				errorMessage = "Invalid form data: " + err.Error()
-			}
-
-			response := map[string]string{"error": errorMessage}
-			json.NewEncoder(w).Encode(response)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Invalid form data"})
 			return
 		}
-
-		// Initialiseer een array om alle foto analyses in op te slaan
-		var analyses []PhotoAnalysis
 
 		// Haal foto op uit form data
 		file, header, err := r.FormFile("photo")
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			response := map[string]string{
-				"error": "No photo found. Use 'photo' field to upload an image.",
-			}
-			json.NewEncoder(w).Encode(response)
+			json.NewEncoder(w).Encode(map[string]string{"error": "No photo found"})
 			return
 		}
-		defer file.Close() // Zorg dat bestand gesloten wordt na gebruik
+		defer file.Close()
 
 		// Haal bijbehorende beschrijving op
 		description := r.FormValue("description")
 
 		if description == "" {
 			w.WriteHeader(http.StatusBadRequest)
-			response := map[string]string{
-				"error": "Missing description for photo",
-			}
-			json.NewEncoder(w).Encode(response)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Missing description"})
 			return
 		}
-
-		filename := header.Filename
-		filesize := header.Size
 
 		// Lees de foto inhoud naar memory
 		photoBytes, err := io.ReadAll(file)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			response := map[string]string{
-				"error": "Could not read photo file",
-			}
-			json.NewEncoder(w).Encode(response)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Could not read photo"})
 			return
 		}
 
 		// Converteer de foto naar een base64 string
 		photoBase64 := base64.StdEncoding.EncodeToString(photoBytes)
 
-		// Bepaal het juiste MIME type van de foto
+		// Bepaal het juiste MIME type van de foto (WEBP en avif nog toevoegen)
 		contentType := header.Header.Get("Content-Type")
 		if contentType == "" {
-			// Fallback gebaseerd op bestandsextensie
-			if strings.HasSuffix(strings.ToLower(filename), ".png") {
-				contentType = "image/png"
-			} else if strings.HasSuffix(strings.ToLower(filename), ".webp") {
-				contentType = "image/webp"
-			} else {
-				contentType = "image/jpeg" // Default
-			}
+			contentType = "image/jpeg" // Default
 		}
 
 		// Bouw system prompt voor kwaliteitscontrole
@@ -181,50 +144,23 @@ func main() {
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			response := map[string]string{
-				"error": "OpenAI API error: " + err.Error(),
-			}
-			json.NewEncoder(w).Encode(response)
+			json.NewEncoder(w).Encode(map[string]string{"error": "AI analysis failed"})
 			return
 		}
 
-		// Parse OpenAI response
+		// Parse AI response
 		aiResponse := resp.Choices[0].Message.Content
-
-		// Initialiseer variabele voor resultaat
-		var aiResult string
-
-		// Check if response is "PASS"
+		var result string
 		if strings.TrimSpace(aiResponse) == "PASS" {
-			aiResult = "pass"
-
-			// Check if response is "FAIL"
-		} else if strings.TrimSpace(aiResponse) == "FAIL" {
-			aiResult = "fail"
-
-			// Onverwacht antwoord van de AI
+			result = "PASS"
 		} else {
-			aiResult = "unknown"
+			result = "FAIL" // Default voor alles wat niet PASS is
 		}
 
-		// Voeg analyse resultaat toe aan array
-		analyses = append(analyses, PhotoAnalysis{
-			Filename:    filename,
-			Description: description,
-			Result:      aiResult,
-			Filesize:    fmt.Sprintf("%d bytes", filesize),
-		})
-
-		// Bouw finale response met alle analyses
-		response := map[string]interface{}{
-			"results": analyses, // Array van alle foto analyses
-		}
-
-		// Encodeer de response als JSON en stuur terug naar de client
-		json.NewEncoder(w).Encode(response)
+		// Stuur response terug
+		json.NewEncoder(w).Encode(QualityResponse{Result: result})
 	})
 
-	//Start een HTTP server op poort 8080, nil geef aan dat er nog geen routes zijn gedefinieerd
 	log.Println("Server start op :8080")
 	http.ListenAndServe(":8080", nil)
 

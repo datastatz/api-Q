@@ -82,3 +82,11 @@ curl -X POST http://localhost:8080/quality-check \
 curl -X POST http://localhost:8080/quality-check \
   -F "photo=@cmd/api/test2.jpg" \
   -F "description=Is there a person in the image?"
+
+curl -X POST http://localhost:8080/quality-check \
+  -F "photo=@cmd/api/test5.webp" \
+  -F "description=Is there a person in the image?"
+
+curl -X POST http://localhost:8080/quality-check \
+-F "photo=@cmd/api/test6.avif" \
+-F "description=Are there fingers in the image?"
