@@ -28,7 +28,7 @@ OPENAI HEEFT GEEN OFFICIELE SDK
 
 
 
-# 10 MB MAX VOOR ELKE FOTO
+# 10 MB MAX VOOR ELKE FOTO, als file size te groot, dan error terugsturen. 
 
 
 
