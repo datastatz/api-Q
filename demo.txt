@@ -1,5 +1,0 @@
-✅ ❌
-
-# Test water supply
-curl -X POST http://localhost:8080/api/laundry/silver/v1/waterFeedAttachedToTap \
-  -F "photo=@cmd/api/water.jpg"

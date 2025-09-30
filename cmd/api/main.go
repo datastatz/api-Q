@@ -91,16 +91,22 @@ func main() {
 		}
 
 		// System prompt specifiek voor water supply check
-		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
+		systemPrompt := `You are a quality control expert for home appliance water connections.
 
-	Check if the water supply hose is properly connected to the tap/faucet.
-	Look for: water inlet hose connected to water supply tap, secure connection, no leaks visible.
+		Evaluate if the water supply system is properly connected and functional.
 
-	RESPONSE FORMAT - FOLLOW EXACTLY:
-	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Water supply hose is properly connected to tap
-	- FAIL: Water supply hose is not connected or connection is faulty
-	- No explanations needed`
+		WHAT TO LOOK FOR:
+		- Water inlet hose(s) present and connected (may include gray/silver flexible hoses)
+		- Connection to water supply point (tap, valve, or wall outlet)
+		- Leak detection device (aquastop) if present - should be connected
+		- No visible water leaks or loose connections
+		- Hoses are not kinked or damaged
+
+		RESPONSE FORMAT - FOLLOW EXACTLY:
+		- Respond with ONLY "PASS" or "FAIL"
+		- PASS: Water supply system is properly connected with all components in place
+		- FAIL: Missing connection, visible leaks, or damaged components
+		- No explanations needed`
 
 		// Maak OpenAI Vision request
 		resp, err := client.CreateChatCompletion(
@@ -189,16 +195,26 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
+		systemPrompt := `You are a quality control expert for appliance installations.
 
-	Check if the drain hose is properly connected to the drain pipe.
-	Look for: drain hose inserted into drain pipe, secure connection, proper positioning.
+			CHECK: Is the drain hose connected to drainage?
 
-	RESPONSE FORMAT - FOLLOW EXACTLY:
-	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Drain hose is properly connected to drain pipe
-	- FAIL: Drain hose is not connected or connection is faulty
-	- No explanations needed`
+			DRAIN HOSE: Large ribbed gray/blue corrugated hose (NOT the smooth water supply hose)
+
+			PASS CONDITIONS:
+			- Drain hose goes downward toward floor/wall
+			- Hose appears to enter a drain, pipe, or opening
+			- Hose is positioned for proper drainage (even if full connection not visible)
+
+			FAIL CONDITIONS ONLY:
+			- Drain hose is completely loose and hanging in the air
+			- Hose is lying flat on the floor disconnected
+			- No drain hose visible at all in the image
+			- Only water supply hose visible (smooth, not ribbed)
+
+			IMPORTANT: If the drain hose goes downward and appears connected to drainage (even if you cannot see the exact connection point), respond PASS.
+
+			Respond with ONLY "PASS" or "FAIL"`
 
 		resp, err := client.CreateChatCompletion(
 			context.Background(),
@@ -283,16 +299,21 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
+		systemPrompt := `You are a quality control expert for appliance installations.
 
-	Check if the power cord is properly plugged into the electrical socket.
-	Look for: power cord plugged into wall socket, secure connection, no loose connections.
+		CHECK: Is the power plug connected to an electrical outlet?
 
-	RESPONSE FORMAT - FOLLOW EXACTLY:
-	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Power cord is properly plugged into socket
-	- FAIL: Power cord is not plugged in or connection is faulty
-	- No explanations needed`
+		WHAT TO LOOK FOR:
+		- A power plug inserted into any type of electrical socket/outlet
+		- This can be: wall socket, power strip, junction box, or any electrical connection point
+		- The plug should be inserted (even if partially visible or in corner of image)
+
+		PASS = Power plug is connected to ANY electrical outlet (wall, strip, box, etc.)
+		FAIL = Plug clearly not connected, hanging loose, or no electrical connection visible
+
+		Even if the connection is small or in corner of image, if you can see a plug connected to power, respond PASS.
+
+		Respond with ONLY "PASS" or "FAIL"`
 
 		resp, err := client.CreateChatCompletion(
 			context.Background(),
@@ -377,16 +398,14 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
+		systemPrompt := `You are a quality control expert for appliance installations.
 
-	Check if the appliance is running a rinse cycle (machine is on and operating).
-	Look for: machine display showing active cycle, water movement, machine running, rinse cycle indicators.
-
-	RESPONSE FORMAT - FOLLOW EXACTLY:
-	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Appliance is running rinse cycle
-	- FAIL: Appliance is not running or not in rinse cycle
-	- No explanations needed`
+		CHECK: Is the machine is powered on?
+		
+		PASS = Machine display is active/lit up showing time or cycle information
+		FAIL = Display is off/dark, or no machine visible
+		
+		Respond with ONLY "PASS" or "FAIL"`
 
 		resp, err := client.CreateChatCompletion(
 			context.Background(),
