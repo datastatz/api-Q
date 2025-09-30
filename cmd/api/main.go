@@ -91,7 +91,7 @@ func main() {
 		}
 
 		// System prompt specifiek voor water supply check
-		systemPrompt := `You are a quality control expert for washing machine installations.
+		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
 	Check if the water supply hose is properly connected to the tap/faucet.
 	Look for: water inlet hose connected to water supply tap, secure connection, no leaks visible.
@@ -189,7 +189,7 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for washing machine installations.
+		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
 	Check if the drain hose is properly connected to the drain pipe.
 	Look for: drain hose inserted into drain pipe, secure connection, proper positioning.
@@ -283,7 +283,7 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for washing machine installations.
+		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
 	Check if the power cord is properly plugged into the electrical socket.
 	Look for: power cord plugged into wall socket, secure connection, no loose connections.
@@ -377,15 +377,15 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for washing machine installations.
+		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
-	Check if the washing machine is running a rinse cycle (machine is on and operating).
+	Check if the appliance is running a rinse cycle (machine is on and operating).
 	Look for: machine display showing active cycle, water movement, machine running, rinse cycle indicators.
 
 	RESPONSE FORMAT - FOLLOW EXACTLY:
 	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Machine is running rinse cycle
-	- FAIL: Machine is not running or not in rinse cycle
+	- PASS: Appliance is running rinse cycle
+	- FAIL: Appliance is not running or not in rinse cycle
 	- No explanations needed`
 
 		resp, err := client.CreateChatCompletion(
@@ -471,10 +471,10 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for washing machine installations.
+		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
-	Check if the shipping bolts/transit bolts have been removed from the washing machine.
-	Look for: no shipping bolts visible, bolt holes empty, machine properly positioned without transport locks.
+	Check if the shipping bolts/transit bolts have been removed from the appliance.
+	Look for: no shipping bolts visible, bolt holes empty, appliance properly positioned without transport locks.
 
 	RESPONSE FORMAT - FOLLOW EXACTLY:
 	- Respond with ONLY "PASS" or "FAIL"
@@ -565,10 +565,10 @@ func main() {
 			contentType = "image/jpeg"
 		}
 
-		systemPrompt := `You are a quality control expert for washing machine installations.
+		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
-	Check if a spirit level/level indicator is present on the washing machine.
-	Look for: spirit level tool visible on or near the machine, level indicator present, measuring tool for leveling.
+	Check if a spirit level/level indicator is present on the appliance.
+	Look for: spirit level tool visible on or near the appliance, level indicator present, measuring tool for leveling.
 
 	RESPONSE FORMAT - FOLLOW EXACTLY:
 	- Respond with ONLY "PASS" or "FAIL"
