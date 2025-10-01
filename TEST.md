@@ -81,3 +81,8 @@ curl -X POST http://localhost:8080/api/laundry/silver/v1/levelIndicatorPresent \
   -F "photo=@cmd/api/levelIndicatorPresent/level1.png"
 
 feedback: Werkt prima
+
+
+------------------------------------------------------------------------------------------------------
+
+Sathena dataset testen!

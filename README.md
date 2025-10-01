@@ -69,4 +69,7 @@ System Prompt: Looks for leveling tool
 Applies to: All appliances requiring leveling (washing machines, dryers, dishwashers, etc.)
 
 
+## TO DO
+# GOLD enpoint endpoints 
+# Dataset van Sathena nog testen
 
