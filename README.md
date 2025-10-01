@@ -70,6 +70,9 @@ Applies to: All appliances requiring leveling (washing machines, dryers, dishwas
 
 
 ## TO DO
-# GOLD enpoint endpoints 
+# GOLD enpoint endpoints  (done)
+# API KEY INVENTARISATIE & IMPLEMENTATIE
+# DATABASE IMPLEMENTEREN EN TESTEN
+# DASHBOARD ONTWIKKELEN
 # Dataset van Sathena nog testen
 
