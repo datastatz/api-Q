@@ -111,6 +111,11 @@ func main() {
 		// System prompt specifiek voor water supply check
 		systemPrompt := `You are a quality control expert for home appliance water connections.
 
+		PHOTO QUALITY CHECK FIRST:
+		- First check if the photo is clear enough for proper analysis
+		- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with: FAIL
+		- Only proceed with the main check if photo quality is acceptable
+
 		Evaluate if the water supply system is properly connected and functional.
 
 		WHAT TO LOOK FOR:
@@ -122,8 +127,8 @@ func main() {
 
 		RESPONSE FORMAT - FOLLOW EXACTLY:
 		- Respond with ONLY "PASS" or "FAIL"
-		- PASS: Water supply system is properly connected with all components in place
-		- FAIL: Missing connection, visible leaks, or damaged components
+		- PASS: Water supply system is properly connected AND photo quality is good
+		- FAIL: Missing connection, visible leaks, damaged components OR photo is too blurry for analysis
 		- No explanations needed`
 
 		// Maak OpenAI Vision request
@@ -215,6 +220,11 @@ func main() {
 
 		systemPrompt := `You are a quality control expert for appliance installations.
 
+			PHOTO QUALITY CHECK FIRST:
+			- First check if the photo is clear enough for proper analysis
+			- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with: FAIL
+			- Only proceed with the main check if photo quality is acceptable
+
 			CHECK: Is the drain hose connected to drainage?
 
 			DRAIN HOSE: Large ribbed gray/blue corrugated hose (NOT the smooth water supply hose)
@@ -229,6 +239,7 @@ func main() {
 			- Hose is lying flat on the floor disconnected
 			- No drain hose visible at all in the image
 			- Only water supply hose visible (smooth, not ribbed)
+			- Photo is too blurry for proper analysis
 
 			IMPORTANT: If the drain hose goes downward and appears connected to drainage (even if you cannot see the exact connection point), respond PASS.
 
@@ -319,6 +330,11 @@ func main() {
 
 		systemPrompt := `You are a quality control expert for appliance installations.
 
+		PHOTO QUALITY CHECK FIRST:
+		- First check if the photo is clear enough for proper analysis
+		- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with: FAIL
+		- Only proceed with the main check if photo quality is acceptable
+
 		CHECK: Is the power plug connected to an electrical outlet?
 
 		WHAT TO LOOK FOR:
@@ -326,8 +342,8 @@ func main() {
 		- This can be: wall socket, power strip, junction box, or any electrical connection point
 		- The plug should be inserted (even if partially visible or in corner of image)
 
-		PASS = Power plug is connected to ANY electrical outlet (wall, strip, box, etc.)
-		FAIL = Plug clearly not connected, hanging loose, or no electrical connection visible
+		PASS = Power plug is connected to ANY electrical outlet (wall, strip, box, etc.) AND photo quality is good
+		FAIL = Plug clearly not connected, hanging loose, no electrical connection visible OR photo is too blurry for analysis
 
 		Even if the connection is small or in corner of image, if you can see a plug connected to power, respond PASS.
 
@@ -418,10 +434,15 @@ func main() {
 
 		systemPrompt := `You are a quality control expert for appliance installations.
 
+		PHOTO QUALITY CHECK FIRST:
+		- First check if the photo is clear enough for proper analysis
+		- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with: FAIL
+		- Only proceed with the main check if photo quality is acceptable
+
 		CHECK: Is the machine is powered on?
 		
-		PASS = Machine display is active/lit up showing time or cycle information
-		FAIL = Display is off/dark, or no machine visible
+		PASS = Machine display is active/lit up showing time or cycle information AND photo quality is good
+		FAIL = Display is off/dark, no machine visible OR photo is too blurry for analysis
 		
 		Respond with ONLY "PASS" or "FAIL"`
 
@@ -510,13 +531,18 @@ func main() {
 
 		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
+	PHOTO QUALITY CHECK FIRST:
+	- First check if the photo is clear enough for proper analysis
+	- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with: FAIL
+	- Only proceed with the main check if photo quality is acceptable
+
 	Check if the shipping bolts/transit bolts have been removed from the appliance.
 	Look for: no shipping bolts visible, bolt holes empty, appliance properly positioned without transport locks.
 
 	RESPONSE FORMAT - FOLLOW EXACTLY:
 	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Shipping bolts have been removed
-	- FAIL: Shipping bolts are still present or visible
+	- PASS: Shipping bolts have been removed AND photo quality is good
+	- FAIL: Shipping bolts are still present/visible OR photo is too blurry for analysis
 	- No explanations needed`
 
 		resp, err := client.CreateChatCompletion(
@@ -604,13 +630,18 @@ func main() {
 
 		systemPrompt := `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
+	PHOTO QUALITY CHECK FIRST:
+	- First check if the photo is clear enough for proper analysis
+	- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with: FAIL
+	- Only proceed with the main check if photo quality is acceptable
+
 	Check if a spirit level/level indicator is present on the appliance.
 	Look for: spirit level tool visible on or near the appliance, level indicator present, measuring tool for leveling.
 
 	RESPONSE FORMAT - FOLLOW EXACTLY:
 	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Spirit level/level indicator is present
-	- FAIL: Spirit level/level indicator is not visible
+	- PASS: Spirit level/level indicator is present AND photo quality is good
+	- FAIL: Spirit level/level indicator is not visible OR photo is too blurry for analysis
 	- No explanations needed`
 
 		resp, err := client.CreateChatCompletion(

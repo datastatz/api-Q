@@ -71,6 +71,7 @@ Applies to: All appliances requiring leveling (washing machines, dryers, dishwas
 
 ## TO DO
 # GOLD enpoint endpoints  (done)
+# Wazigheid check (done)
 # API KEY INVENTARISATIE & IMPLEMENTATIE
 # Rate limits
 # DATABASE IMPLEMENTEREN EN TESTEN

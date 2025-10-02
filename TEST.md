@@ -86,3 +86,17 @@ feedback: Werkt prima
 ------------------------------------------------------------------------------------------------------
 
 Sathena dataset testen!
+
+❌
+# Blurry test api/laundry/silver/v1/shippingBoltsRemoved \
+curl -X POST http://localhost:8080/api/laundry/silver/v1/shippingBoltsRemoved \
+  -F "photo=@cmd/api/shippingBoltsRemoved/blurry.jpg"
+
+Feeback: Geeft pass, dit is een issue dat gefixt moet worden. Want de image is blurry en mag geen pass geven.
+
+✅
+# 
+curl -X POST http://localhost:8080/api/laundry/gold/v1/PROJ-123/shippingBoltsRemoved \
+  -F "photo=@cmd/api/shippingBoltsRemoved/blurry.jpg"
+
+Feedback: Gold geeft correct antwoord op een foto die te blurry is.
