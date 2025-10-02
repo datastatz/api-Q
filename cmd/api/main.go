@@ -752,6 +752,14 @@ func main() {
 		case "waterFeedAttachedToTap":
 			systemPrompt = `You are a quality control expert for home appliance water connections.
 
+PHOTO QUALITY CHECK:
+- First check if the photo is clear enough for proper analysis
+- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with:
+FAIL
+Photo too blurry - please retake with better focus
+
+- Only proceed with the main check if photo quality is acceptable
+
 Evaluate if the water supply system is properly connected and functional.
 
 WHAT TO LOOK FOR:
@@ -776,6 +784,14 @@ No water connection visible or loose hoses detected`
 		case "drainHoseInDrain":
 			systemPrompt = `You are a quality control expert for appliance installations.
 
+PHOTO QUALITY CHECK:
+- First check if the photo is clear enough for proper analysis
+- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with:
+FAIL
+Photo too blurry - please retake with better focus
+
+- Only proceed with the main check if photo quality is acceptable
+
 CHECK: Is the drain hose connected to drainage?
 
 DRAIN HOSE: Large ribbed gray/blue corrugated hose (NOT the smooth water supply hose)
@@ -798,6 +814,14 @@ RESPONSE FORMAT - FOLLOW EXACTLY:
 		case "powerCordInSocket":
 			systemPrompt = `You are a quality control expert for appliance installations.
 
+PHOTO QUALITY CHECK:
+- First check if the photo is clear enough for proper analysis
+- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with:
+FAIL
+Photo too blurry - please retake with better focus
+
+- Only proceed with the main check if photo quality is acceptable
+
 CHECK: Is the power plug connected to an electrical outlet?
 
 WHAT TO LOOK FOR:
@@ -815,6 +839,14 @@ RESPONSE FORMAT - FOLLOW EXACTLY:
 		case "rinseCycleMachineIsOn":
 			systemPrompt = `You are a quality control expert for appliance installations.
 
+PHOTO QUALITY CHECK:
+- First check if the photo is clear enough for proper analysis
+- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with:
+FAIL
+Photo too blurry - please retake with better focus
+
+- Only proceed with the main check if photo quality is acceptable
+
 CHECK: Is the machine powered on?
 
 PASS = Machine display is active/lit up showing time or cycle information
@@ -827,6 +859,14 @@ RESPONSE FORMAT - FOLLOW EXACTLY:
 		case "shippingBoltsRemoved":
 			systemPrompt = `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
 
+PHOTO QUALITY CHECK:
+- First check if the photo is clear enough for proper analysis
+- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with:
+FAIL
+Photo too blurry - please retake with better focus
+
+- Only proceed with the main check if photo quality is acceptable
+
 Check if the shipping bolts/transit bolts have been removed from the appliance.
 Look for: no shipping bolts visible, bolt holes empty, appliance properly positioned without transport locks.
 
@@ -836,6 +876,14 @@ RESPONSE FORMAT - FOLLOW EXACTLY:
 
 		case "levelIndicatorPresent":
 			systemPrompt = `You are a quality control expert for home appliance installations (washing machines, dryers, dishwashers, etc.).
+
+PHOTO QUALITY CHECK:
+- First check if the photo is clear enough for proper analysis
+- If the image is too blurry, unclear, or has poor quality that prevents proper evaluation, respond with:
+FAIL
+Photo too blurry - please retake with better focus
+
+- Only proceed with the main check if photo quality is acceptable
 
 Check if a spirit level/level indicator is present on the appliance.
 Look for: spirit level tool visible on or near the appliance, level indicator present, measuring tool for leveling.
