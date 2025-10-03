@@ -101,6 +101,11 @@ curl -X POST http://localhost:8080/api/laundry/gold/v1/PROJ-123/shippingBoltsRem
 
 Feedback: Gold geeft correct antwoord op een foto die te blurry is.
 
+✅
+curl -X POST http://localhost:8080/api/laundry/gold/v1/cooletest/shippingBoltsRemoved \
+  -F "photo=@testmap/1transportbouten/test2.JPG"
 
-curl -X POST http://localhost:8080/api/laundry/gold/v1/test1/shippingBoltsRemoved \
-  -F "photo=@Sathena/B1/B1.jpeg"
+  Feedback: werkt.
+
+  curl -X POST http://localhost:8080/api/laundry/gold/v1/cooletest/shippingBoltsRemoved \
+  -F "photo=@testmap/1transportbouten/test3.JPG"

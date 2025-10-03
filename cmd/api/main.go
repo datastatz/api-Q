@@ -845,7 +845,7 @@ FAIL CONDITIONS ONLY:
 - Drain hose is completely loose and hanging in the air
 - Hose is lying flat on the floor disconnected
 - No drain hose visible at all in the image
-- Only water supply hose visible (smooth, not ribbed)
+- Only water supply hose visible (smooth or ribbed)
 
 RESPONSE FORMAT - FOLLOW EXACTLY:
 - First line: "PASS" or "FAIL"
