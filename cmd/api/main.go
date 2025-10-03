@@ -537,12 +537,21 @@ func main() {
 	- Only proceed with the main check if photo quality is acceptable
 
 	Check if the shipping bolts/transit bolts have been removed from the appliance.
-	Look for: no shipping bolts visible, bolt holes empty, appliance properly positioned without transport locks.
+
+	PASS CONDITIONS:
+	- Shipping bolts have been removed from their original mounting positions in the appliance
+	- If shipping bolts are visible on top of the machine or next to it, this means they were successfully REMOVED and should be counted as PASS
+	- Bolt holes in the appliance are empty (no bolts screwed into the appliance itself)
+	- Appliance is properly positioned without transport locks
+
+	FAIL CONDITIONS:
+	- Shipping bolts are still screwed into the appliance in their original positions
+	- Appliance is still locked in transport position with bolts in place
 
 	RESPONSE FORMAT - FOLLOW EXACTLY:
 	- Respond with ONLY "PASS" or "FAIL"
-	- PASS: Shipping bolts have been removed AND photo quality is good
-	- FAIL: Shipping bolts are still present/visible OR photo is too blurry for analysis
+	- PASS: Shipping bolts have been removed from the appliance (even if visible on top/side) AND photo quality is good
+	- FAIL: Shipping bolts are still installed in the appliance OR photo is too blurry for analysis
 	- No explanations needed`
 
 		resp, err := client.CreateChatCompletion(
@@ -899,7 +908,16 @@ Photo too blurry - please retake with better focus
 - Only proceed with the main check if photo quality is acceptable
 
 Check if the shipping bolts/transit bolts have been removed from the appliance.
-Look for: no shipping bolts visible, bolt holes empty, appliance properly positioned without transport locks.
+
+PASS CONDITIONS:
+- Shipping bolts have been removed from their original mounting positions in the appliance
+- If shipping bolts are visible on top of the machine or next to it, this means they were successfully REMOVED and should be counted as PASS
+- Bolt holes in the appliance are empty (no bolts screwed into the appliance itself)
+- Appliance is properly positioned without transport locks
+
+FAIL CONDITIONS:
+- Shipping bolts are still screwed into the appliance in their original positions
+- Appliance is still locked in transport position with bolts in place
 
 RESPONSE FORMAT - FOLLOW EXACTLY:
 - First line: "PASS" or "FAIL"
